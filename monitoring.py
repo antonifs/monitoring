@@ -11,7 +11,7 @@ logs_path = path + "/logs/"
 def run_bash():
 
     # bash homepage
-    os.system(bash_path + 'homepage.sh')
+    os.system(bash_path + 'render_speed.sh')
 
     # bash product page
 
