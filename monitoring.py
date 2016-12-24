@@ -36,6 +36,9 @@ def read_logs():
     rps_home_page = parse_rps(logs_path + 'rps_home_page.txt')
     rps_product_page = parse_rps(logs_path + 'rps_product_page.txt')
 
+    # read memory
+    memory = parse_memory(logs_path + 'memory.txt')
+
     # get order log
     order  = json.load(urllib2.urlopen(url_order))
 
@@ -87,6 +90,26 @@ def parse_rps(fname):
             print "There is something wrong with your bash script."
 
     return res
+
+
+def parse_memory(fname):
+    res = []
+
+    try:
+        with open(fname) as f:
+            line = f.readlines()
+            for i in line:
+                if "Requests per second:" in i:
+                    str = i.split(":")
+                    str_splited = str[1].split("[")
+                    new_str = str_splited[0].replace(" ", "")
+                    new_str = int(math.ceil(float(new_str)))
+                    res.append(new_str)
+    except ValueError:
+            print "There is something wrong with your bash script."
+
+    return res
+
 
 # Store the return of second action into db
 def save_report():
