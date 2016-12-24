@@ -1,2 +1,2 @@
 #!/bin/bash
-vmstat -s > logs/memory.txt &
+vmstat -s 2> logs/memory.txt &

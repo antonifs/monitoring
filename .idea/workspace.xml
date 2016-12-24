@@ -20,10 +20,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="monitoring.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="monitoring.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/monitoring.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.1891892">
+            <state vertical-scroll-proportion="0.0">
               <caret line="95" column="4" selection-start-line="95" selection-start-column="4" selection-end-line="95" selection-end-column="4" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
@@ -32,10 +32,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="memory.sh" pinned="false" current-in-tab="false">
+      <file leaf-file-name="memory.sh" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bash/memory.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.1111112">
+            <state vertical-scroll-proportion="0.08746356">
               <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
               <folding />
             </state>
@@ -45,8 +45,8 @@
       <file leaf-file-name="render_speed.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bash/render_speed.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.5555556">
-              <caret line="1" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="114" />
+            <state vertical-scroll-proportion="-1.6666666">
+              <caret line="3" column="41" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -72,8 +72,8 @@
         <option value="$PROJECT_DIR$/logs/rps_product_page.txt" />
         <option value="$PROJECT_DIR$/logs/home_page.txt" />
         <option value="$PROJECT_DIR$/logs/product_page.txt" />
-        <option value="$PROJECT_DIR$/bash/memory.sh" />
         <option value="$PROJECT_DIR$/monitoring.py" />
+        <option value="$PROJECT_DIR$/bash/memory.sh" />
       </list>
     </option>
   </component>
@@ -422,29 +422,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/monitoring.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="95" column="4" selection-start-line="95" selection-start-column="4" selection-end-line="95" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/bash/render_speed.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.5555556">
-          <caret line="1" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="114" />
+        <state vertical-scroll-proportion="-1.6666666">
+          <caret line="3" column="41" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bash/memory.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.1111112">
+        <state vertical-scroll-proportion="0.08746356">
           <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/monitoring.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1891892">
-          <caret line="95" column="4" selection-start-line="95" selection-start-column="4" selection-end-line="95" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
