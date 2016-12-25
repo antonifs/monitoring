@@ -1,0 +1,42 @@
+This is ApacheBench, Version 2.3 <$Revision: 1528965 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking www.tinkerlust.com (be patient).....done
+
+
+Server Software:        Apache/2.4.7
+Server Hostname:        www.tinkerlust.com
+Server Port:            80
+
+Document Path:          /
+Document Length:        98337 bytes
+
+Concurrency Level:      10
+Time taken for tests:   21.448 seconds
+Complete requests:      100
+Failed requests:        0
+Total transferred:      9884300 bytes
+HTML transferred:       9833700 bytes
+Requests per second:    4.66 [#/sec] (mean)
+Time per request:       2144.797 [ms] (mean)
+Time per request:       214.480 [ms] (mean, across all concurrent requests)
+Transfer rate:          450.05 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.1      0       1
+Processing:  1450 2051 304.5   2028    3012
+Waiting:     1383 1965 297.7   1932    2937
+Total:       1450 2051 304.5   2028    3012
+
+Percentage of the requests served within a certain time (ms)
+  50%   2028
+  66%   2137
+  75%   2240
+  80%   2309
+  90%   2446
+  95%   2606
+  98%   2813
+  99%   3012
+ 100%   3012 (longest request)

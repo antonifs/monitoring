@@ -1,0 +1,42 @@
+This is ApacheBench, Version 2.3 <$Revision: 1528965 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking www.tinkerlust.com (be patient).....done
+
+
+Server Software:        Apache/2.4.7
+Server Hostname:        www.tinkerlust.com
+Server Port:            80
+
+Document Path:          /schutz-nude-espadrilles-wedges
+Document Length:        102597 bytes
+
+Concurrency Level:      10
+Time taken for tests:   30.334 seconds
+Complete requests:      100
+Failed requests:        0
+Total transferred:      10310300 bytes
+HTML transferred:       10259700 bytes
+Requests per second:    3.30 [#/sec] (mean)
+Time per request:       3033.433 [ms] (mean)
+Time per request:       303.343 [ms] (mean, across all concurrent requests)
+Transfer rate:          331.92 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   1.2      0       4
+Processing:  1547 2893 902.3   2794    8072
+Waiting:     1426 2774 887.4   2689    7965
+Total:       1547 2894 902.4   2794    8076
+
+Percentage of the requests served within a certain time (ms)
+  50%   2794
+  66%   3034
+  75%   3122
+  80%   3263
+  90%   3571
+  95%   3821
+  98%   7893
+  99%   8076
+ 100%   8076 (longest request)
