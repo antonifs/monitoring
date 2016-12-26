@@ -9,12 +9,21 @@ bash_path = path + "/bash/"
 logs_path = path + "/logs/"
 url_order = "http://128.199.211.72/tinkerapi/rest/cart?access_token=b33014934858f779ede2b5a8f9011e3b579f47af"
 
-
 # variable init
 home_page_speed = ""
 product_page_speed = ""
 rps_home_page = ""
 rps_product_page = ""
+
+
+# Flask-Mail configuration
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'antonifsetiawan@gmail.com'
+app.config['MAIL_PASSWORD'] = 'GKa1mKa1m35'
+app.config['MAIL_DEFAULT_SENDER'] = 'antonifsetiawan@gmail.com'
+
 
 # Execute bash script
 def run_bash():
