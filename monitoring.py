@@ -1,29 +1,40 @@
 import commands
-import sqlite3
 from collections import OrderedDict
 import os, math, urllib2, json, unicodedata
+from redis import StrictRedis
 
 # setting global variable
 path = os.getcwd()
 bash_path = path + "/bash/"
 logs_path = path + "/logs/"
-url_order = "http://128.199.211.72/tinkerapi/rest/cart?access_token=b33014934858f779ede2b5a8f9011e3b579f47af"
+
+# url
+token_url = 'http://www.tinkerlust.com/internalapi/oauth2/punten?client_id=8b36d9fe60232d9bdfc10ae3807e5b4d&client_secret=67b7aa0236c081cb095f964ead4d6e1b'
+
+# get access token
+def get_token(url):
+    try:
+        token = json.load(urllib2.urlopen(url))
+        token = token["access_token"]
+    except ValueError:
+        token  = False
+
+    return token
+
+token = get_token(token_url)
+
+if token:
+    url_online_visitor = "http://www.tinkerlust.com/internalapi/rest/visitor?access_token=" + token
+    url_order = "http://www.tinkerlust.com/internalapi/rest/order?from=26-12-2016%2006:00:00&to=26-12-2016%2012:00:00&access_token="+ token
+else:
+    url_online_visitor = ""
+    url_order = ""
 
 # variable init
 home_page_speed = ""
 product_page_speed = ""
 rps_home_page = ""
 rps_product_page = ""
-
-
-# Flask-Mail configuration
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'antonifsetiawan@gmail.com'
-app.config['MAIL_PASSWORD'] = 'GKa1mKa1m35'
-app.config['MAIL_DEFAULT_SENDER'] = 'antonifsetiawan@gmail.com'
-
 
 # Execute bash script
 def run_bash():
@@ -33,6 +44,11 @@ def run_bash():
 
     # bash request per second (rps) durability
     os.system(bash_path + 'rps.sh')
+
+# get order
+def get_order(url):
+    order = json.load(urllib2.urlopen(url))
+    return order["data"]["num_of_order"]
 
 # Read logs files
 def read_logs():
@@ -49,19 +65,14 @@ def read_logs():
     memory = parse_memory(logs_path + 'memory.txt')
 
     # get order log
-    order  = json.load(urllib2.urlopen(url_order))
-
-    if isinstance(order["message"], unicode):
-        str_order = unicodedata.normalize('NFKD', order["message"]).encode('ascii','ignore')
-    else:
-        str_order = order["message"]
+    order  = [get_order(url_order)]
 
     return {
         'home_page_speed': home_page_speed,
         'product_page_speed': product_page_speed,
         'rps_home_page': rps_home_page,
         'rps_product_page': rps_product_page,
-        "order": str_order,
+        "order": order,
     }
 
 
@@ -132,67 +143,9 @@ def generate_report():
 
 # Send email to PIC
 def serve_report():
-    return ""
+    return read_logs()
 
-# home_page_speed = commands.getoutput("time wget -pq --no-cache --delete-after www.tinkerlust.com")
-# product_page_speed = commands.getoutput("time wget -pq --no-cache --delete-after http://www.tinkerlust.com/nike-pink-flex-2014-sneakers")
-# memory = commands.getoutput("vmstat -s")
-# memory = [s.strip() for s in memory.splitlines()]
-#
-# data = OrderedDict()
-# for key, mem in enumerate(memory):
-#     if key < 5:
-#         item = mem.split(" ")
-#         data[item[1]] = item[0]
-#
-# data["home_page_load"] = "0123"
-# data["product_page_load"] = "0223"
-# data["number_online_customer"] = "0193"
-# data["transaction_order"] = "3"
-#
-# l = []
-# for key, val in data.iteritems():
-#     l.append(val)
-#
-# tup = tuple(l)
-#
-# def main():
-#     conn = sqlite3.connect("monitoring.db")
-#     db = conn.cursor()
-#     # db.execute('drop table if exists monitor')
-#     # db.execute('CREATE TABLE monitor '
-#     #            '(total_memory varchar, '
-#     #            'used_memory varchar, '
-#     #            'active_memory varchar, '
-#     #            'inactive_memory varchar, '
-#     #            'free_memory varchar, '
-#     #            'buffer_memory varchar, '
-#     #            'swap_memory varchar,'
-#     #            'home_page_load varchar,'
-#     #            'product_page_load varchar,'
-#     #            'number_online_customer varchar,'
-#     #            'transaction_order varchar'
-#     #            ')')
-#     # db.execute('INSERT INTO monitor ('
-#     #            'total_memory, '
-#     #            'used_memory, '
-#     #            'active_memory, '
-#     #            'inactive_memory, '
-#     #            'free_memory, '
-#     #            'buffer_memory, '
-#     #            'swap_memory, '
-#     #            'home_page_load, '
-#     #            'product_page_load, '
-#     #            'number_online_customer, '
-#     #            'transaction_order) VALUES (?, ?)', tup)
-#
-#     # db.commit()
-#
-#     # items = db.execute('SELECT activity, qty FROM monitor')
-#     print tup
-#
-#
-#     # for c in items:
-#     #     print c[0], c[1]
-#
-# if __name__ == "__main__": main()
+def main():
+    print serve_report()
+
+if __name__ == "__main__": main()
