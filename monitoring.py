@@ -2,14 +2,27 @@ import commands
 from collections import OrderedDict
 import os, math, urllib2, json, unicodedata
 from redis import StrictRedis
+from datetime import datetime, timedelta
 
 # setting global variable
 path = os.getcwd()
 bash_path = path + "/bash/"
 logs_path = path + "/logs/"
+client_id = '8b36d9fe60232d9bdfc10ae3807e5b4d'
+client_secret = '67b7aa0236c081cb095f964ead4d6e1b'
+
+from_date = datetime.now() - timedelta(hours=24)
+fdate = format(from_date, '%d-%m-%Y %H:%M:%S')
+from_date = format(from_date, '%d-%m-%Y %H:%M:%S')
+from_date = from_date.replace(" ", "%20")
+
+to_date = datetime.now()
+tdate = format(to_date, '%H:%M:%S')
+to_date = format(to_date, '%d-%m-%Y %H:%M:%S')
+to_date = to_date.replace(" ", "%20")
 
 # url
-token_url = 'http://www.tinkerlust.com/internalapi/oauth2/punten?client_id=8b36d9fe60232d9bdfc10ae3807e5b4d&client_secret=67b7aa0236c081cb095f964ead4d6e1b'
+token_url = 'http://www.tinkerlust.com/internalapi/oauth2/punten?client_id='+ client_id +'&client_secret=' + client_secret
 
 # get access token
 def get_token(url):
@@ -25,7 +38,7 @@ token = get_token(token_url)
 
 if token:
     url_online_visitor = "http://www.tinkerlust.com/internalapi/rest/visitor?access_token=" + token
-    url_order = "http://www.tinkerlust.com/internalapi/rest/order?from=26-12-2016%2006:00:00&to=26-12-2016%2012:00:00&access_token="+ token
+    url_order = "http://www.tinkerlust.com/internalapi/rest/order?from="+ from_date +"&to="+ to_date +"&access_token="+ token
 else:
     url_online_visitor = ""
     url_order = ""
@@ -72,6 +85,7 @@ def read_logs():
         'product_page_speed': product_page_speed,
         'rps_home_page': rps_home_page,
         'rps_product_page': rps_product_page,
+        "memory": memory,
         "order": order,
     }
 
@@ -133,19 +147,59 @@ def parse_memory(fname):
 
 
 # Store the return of second action into db
-def save_report():
-    return ""
-
+def save_report(temp):
+    r = StrictRedis()
+    r.set("performance", temp)
 
 # Create an email content in HTML mode
 def generate_report():
-    return ""
+    logs = read_logs()
+
+    rps_home_page = logs['rps_home_page']
+    rps_product_page = logs['rps_product_page']
+    home_page_speed = logs['home_page_speed']
+    product_page_speed = logs['product_page_speed']
+    memory = logs['memory']
+    order = logs["order"]
+
+    temp = """
+    + Order: {} ({} - {})
+    + RPS Home Page: {} req/sec
+    + RPS Product Page: {} req/sec
+    + Home Page Speed: {} Min {} Sec
+    + Product Page Speed: {} Min {} Sec
+    + Memory:
+      - Total {} kb
+      - Used {} kb
+      - Active {} kb
+      - Inactive {} kb
+      - Free {} kb
+    """.format(
+        order[0],
+        fdate,
+        tdate,
+        rps_home_page[0],
+        rps_product_page[0],
+        home_page_speed[0],
+        home_page_speed[1],
+        product_page_speed[0],
+        product_page_speed[1],
+        memory['total'],
+        memory['used'],
+        memory['active'],
+        memory['inactive'],
+        memory['free'],
+    )
+
+    save_report(temp)
+
+    return temp
 
 # Send email to PIC
 def serve_report():
-    return read_logs()
+    return generate_report()
 
 def main():
-    print serve_report()
+    print generate_report()
 
 if __name__ == "__main__": main()
