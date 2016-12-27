@@ -1,8 +1,7 @@
-import commands
 from collections import OrderedDict
-import os, math, urllib2, json, unicodedata
-from redis import StrictRedis
 from datetime import datetime, timedelta
+from redis import StrictRedis
+import os, math, urllib2, json, unicodedata
 
 # setting global variable
 path = os.getcwd()
@@ -11,7 +10,7 @@ logs_path = path + "/logs/"
 client_id = '8b36d9fe60232d9bdfc10ae3807e5b4d'
 client_secret = '67b7aa0236c081cb095f964ead4d6e1b'
 
-from_date = datetime.now() - timedelta(hours=24)
+from_date = datetime.now() - timedelta(hours=10)
 fdate = format(from_date, '%d-%m-%Y %H:%M:%S')
 from_date = format(from_date, '%d-%m-%Y %H:%M:%S')
 from_date = from_date.replace(" ", "%20")
@@ -31,23 +30,14 @@ def get_token(url):
         token = token["access_token"]
     except ValueError:
         token  = False
-
     return token
 
-token = get_token(token_url)
-
-if token:
-    url_online_visitor = "http://www.tinkerlust.com/internalapi/rest/visitor?access_token=" + token
-    url_order = "http://www.tinkerlust.com/internalapi/rest/order?from="+ from_date +"&to="+ to_date +"&access_token="+ token
+if get_token(token_url):
+    url_online_visitor = "http://www.tinkerlust.com/internalapi/rest/visitor?access_token=" + get_token(token_url)
+    url_order = "http://www.tinkerlust.com/internalapi/rest/order?from="+ from_date +"&to="+ to_date +"&access_token="+ get_token(token_url)
 else:
     url_online_visitor = ""
     url_order = ""
-
-# variable init
-home_page_speed = ""
-product_page_speed = ""
-rps_home_page = ""
-rps_product_page = ""
 
 # Execute bash script
 def run_bash():
@@ -92,7 +82,6 @@ def read_logs():
 
 def parse_speed_page(fname):
     res = []
-
     try:
         with open(fname) as f:
             line = f.readlines()
@@ -103,7 +92,7 @@ def parse_speed_page(fname):
                     res.append(new_str[0])
                     res.append(new_str[1].replace("s", ""))
     except ValueError:
-            print "There is something wrong with your bash script."
+        print "There is something wrong with your bash script."
 
     return res
 
@@ -125,7 +114,6 @@ def parse_rps(fname):
 
     return res
 
-
 def parse_memory(fname):
     data = OrderedDict()
     try:
@@ -142,9 +130,7 @@ def parse_memory(fname):
 
     except ValueError:
             print "There is something wrong with your bash script."
-
     return data
-
 
 # Store the return of second action into db
 def save_report(temp):
